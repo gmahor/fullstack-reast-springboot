@@ -1,5 +1,5 @@
-export const SearchBox = ({ label, placeholder, value }) => {
-  return(
+export const SearchBox = ({ label, placeholder, value, handleSearch }) => {
+  return (
     <div className="flex items-center gap-3 pl-4 flex-1 font-primary">
       <label className="text-lg font-semibold text-primary">{label}</label>
       <input

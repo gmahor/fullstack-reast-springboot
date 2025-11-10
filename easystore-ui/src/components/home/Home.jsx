@@ -6,7 +6,7 @@ import apiClient from "../../api/apiClient";
 
 export const Home = () => {
   const [products, setProducts] = useState([]);
- const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
