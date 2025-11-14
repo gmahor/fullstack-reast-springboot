@@ -1,42 +1,70 @@
 import { faShoppingBasket, faTags } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, NavLink } from "react-router-dom";
 
 export const Header = () => {
-  const navLinkClass =
-    "text-center text-lg font-primary font-semibold text-primary py-6";
+  const navLinkClass = "text-center text-lg font-semibold  py-2";
   return (
     <header className="border-b border-gray-300 sticky top-0 z-20 bg-gray-100">
       <div className="flex items-center justify-between mx-auto max-w-[1152px] px-6 py-4">
-        <a href="/" className={navLinkClass}>
+        <Link to="/" className={`text-primary ${navLinkClass}`}>
           <FontAwesomeIcon icon={faTags} className="h-8 w-8" />
           <span className="font-bold">Eazy Sticker</span>
-        </a>
+        </Link>
         <nav className="flex items-center py-2 z-10">
           <ul className="flex space-x-6">
             <li>
-              <a href="/" className={navLinkClass}>
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  isActive
+                    ? ` text-white bg-primary rounded md:rounded-lg ${navLinkClass}`
+                    : navLinkClass
+                }
+              >
                 Home
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="/about" className={navLinkClass}>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  isActive
+                    ? `text-white bg-primary rounded md:rounded-lg ${navLinkClass}`
+                    : navLinkClass
+                }
+              >
                 About
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="/contact" className={navLinkClass}>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive
+                    ? `text-white bg-primary rounded md:rounded-lg ${navLinkClass}`
+                    : navLinkClass
+                }
+              >
                 Contact
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="/login" className={navLinkClass}>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? `text-white bg-primary rounded md:rounded-lg ${navLinkClass}`
+                    : navLinkClass
+                }
+              >
                 Login
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="/cart" className="text-primary py-2">
+              <NavLink to="/cart" className="text-primary py-2">
                 <FontAwesomeIcon icon={faShoppingBasket} />
-              </a>
+              </NavLink>
             </li>
           </ul>
         </nav>

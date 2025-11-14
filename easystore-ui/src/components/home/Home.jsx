@@ -1,48 +1,16 @@
 import { PageHeading } from "../page/PageHeading";
 import { ProductListings } from "../product/ProductListings";
 
-import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import apiClient from "../../api/apiClient";
 
 export const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await apiClient.get("/products");
-      setProducts(response.data);
-    } catch (error) {
-      setError(
-        error.response?.data?.message ||
-          "Failed to fetch products. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="text-xl font-semibold">Loading products...</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="text-xl text-red-500">Error: {error}</span>
-      </div>
-    );
-  }
+  const products = useLoaderData();
+  // const location = useLocation();
+  // const username = location.state;
+  // const pathname = location.pathname;
+  // console.log(username);
+  // console.log(pathname);
 
   return (
     <>
@@ -56,3 +24,15 @@ export const Home = () => {
     </>
   );
 };
+
+export async function productsLoader() {
+  try {
+    const response = await apiClient.get("/products");
+    return response.data;
+  } catch (error) {
+    throw new Response(
+      error.message || "Failed to fetch products. Please try again.",
+      { status: error.status || 500 }
+    );
+  }
+}
