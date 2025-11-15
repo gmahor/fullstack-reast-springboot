@@ -1,7 +1,42 @@
-import { Form } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import {
+  Form,
+  useActionData,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
+import { toast } from "react-toastify";
+import apiClient from "../api/apiClient.js";
 import { PageTitle } from "./page/PageTitle.jsx";
 
 export const Contact = () => {
+  const actionData = useActionData();
+  const formRef = useRef(null);
+  const navigation = useNavigation();
+  const submit = useSubmit();
+  const isSubmitting = navigation.state === "submitting";
+
+  useEffect(() => {
+    if (actionData?.success) {
+      formRef.current?.reset();
+      toast.success("Your message has been submitted successfully!");
+    }
+  }, [actionData]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const userConfirmed = window.confirm(
+      "Are you sure you want to submit the form?"
+    );
+
+    if (userConfirmed) {
+      const formData = new FormData(formRef.current);
+      submit(formData, { method: "POST" });
+    } else {
+      toast.info("Form submission cancelled.");
+    }
+  };
+
   const labelStyle =
     "block text-lg font-semibold text-primary dark:text-light mb-2";
   const textFieldStyle =
@@ -19,9 +54,9 @@ export const Contact = () => {
 
       {/* Contact Form */}
       <Form
-        // method="POST"
-        // // ref={formRef}
-        // // onSubmit={handleSubmit}
+        method="POST"
+        ref={formRef}
+        onSubmit={handleSubmit}
         className="space-y-6 max-w-[768px] mx-auto"
       >
         {/* Name Field */}
@@ -97,14 +132,33 @@ export const Contact = () => {
         <div className="text-center">
           <button
             type="submit"
-            // disabled={isSubmitting}
+            disabled={isSubmitting}
             className="px-6 py-2 text-white dark:text-black text-xl rounded-md transition duration-200 bg-primary dark:bg-light hover:bg-dark dark:hover:bg-lighter"
           >
-            {/* {isSubmitting ? "Submitting..." : "Submit"} */}
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </Form>
     </div>
   );
 };
+
+export async function contactAction({ request, parms }) {
+  const data = await request.formData();
+  const contactData = {
+    name: data.get("name"),
+    email: data.get("email"),
+    mobileNumber: data.get("mobileNumber"),
+    message: data.get("message"),
+  };
+  try {
+    await apiClient.post("/contacts", contactData);
+    //  return  redirect("/home");
+    return { success: true };
+  } catch (error) {
+    throw new Response(
+      error.message || "Failed to submit your message. Please try again.",
+      { status: error.status || 500 }
+    );
+  }
+}

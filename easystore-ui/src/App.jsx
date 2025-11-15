@@ -8,7 +8,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function App() {
   const navigation = useNavigation();
-
   return (
     <>
       <Header />

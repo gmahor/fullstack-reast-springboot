@@ -7,7 +7,7 @@ export const Footer = () => {
             Built with
             <FontAwesomeIcon
                 icon={faHeart}
-                className='text-red-600 mx-1 animate-spin'
+                className='text-red-600 mx-1 animate-pulse'
                 aria-hidden='true'
             />
             by 
