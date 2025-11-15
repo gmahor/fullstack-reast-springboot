@@ -9,4 +9,8 @@ public interface IProductService {
     List<ProductDto> getProducts();
 
     List<ProductDto> searchProducts(String value);
+
+    List<ProductDto> sortProducts(String value);
+
+    ProductDto getProductById(long id);
 }
