@@ -21,6 +21,7 @@ import {
   getProductDetails,
   ProductDetail,
 } from "./components/product/ProductDetail.jsx";
+import { CartContext, CartProvider } from "./store/cart-content.jsx";
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -43,7 +44,9 @@ const appRouter = createBrowserRouter(routerDefinitions);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={appRouter} />
+    <CartProvider>
+      <RouterProvider router={appRouter} />
+    </CartProvider>
     <ToastContainer
       position="top-center"
       autoClose={3000}
