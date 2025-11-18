@@ -1,9 +1,8 @@
-import React from "react";
-import { Header } from "./header/Header";
-import { Footer } from "./footer/Footer";
 import { Link, useRouteError } from "react-router-dom";
+import errorImage from "../assets/util/error.png";
+import { Footer } from "./footer/Footer";
+import { Header } from "./header/Header";
 import { PageTitle } from "./page/PageTitle";
-import errorImage from "../assets/util/error.png"
 
 export const ErrorPage = () => {
   const routeError = useRouteError();

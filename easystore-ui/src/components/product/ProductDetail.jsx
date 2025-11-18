@@ -133,8 +133,13 @@ export async function getProductDetails({ params }) {
     const response = await apiClient.get(`/products/${productId}`);
     return response.data;
   } catch (error) {
-    throw new Response(error.message || "Failed to fetch product", {
-      status: error.response?.status || 500,
-    });
+    throw new Response(
+      error.response?.data?.errorMessage ||
+        error.message ||
+        "Failed to fetch product",
+      {
+        status: error.response?.status || 500,
+      }
+    );
   }
 }
