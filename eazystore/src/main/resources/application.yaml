@@ -18,6 +18,11 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: Asia/Kolkata
+  security:
+    user:
+      name: gourav
+      password: gourav
+      roles: USER,ADMIN
 
 logging:
   pattern:

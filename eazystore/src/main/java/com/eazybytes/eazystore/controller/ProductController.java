@@ -19,10 +19,10 @@ public class ProductController {
 
     private final IProductService iProductService;
 
-    @GetMapping
+    @GetMapping("/getProducts")
     public ResponseEntity<List<ProductDto>> getProducts() throws InterruptedException {
         List<ProductDto> products = iProductService.getProducts();
-        if(products.isEmpty()){
+        if (products.isEmpty()) {
             products = Collections.emptyList();
         }
         return ResponseEntity
@@ -42,7 +42,7 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/{value}")
+    @GetMapping("/getProduct/{value}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable long value) {
         ProductDto product = iProductService.getProductById(value);
         return ResponseEntity.ok(product);
