@@ -27,7 +27,7 @@ export const Home = () => {
 
 export async function productsLoader() {
   try {
-    const response = await apiClient.get("/products");
+    const response = await apiClient.get("/products/getProducts");
     return response.data;
   } catch (error) {
     throw new Response(

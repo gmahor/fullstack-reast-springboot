@@ -140,7 +140,7 @@ export async function getProductDetails({ params }) {
   }
 
   try {
-    const response = await apiClient.get(`/products/${productId}`);
+    const response = await apiClient.get(`/products/getProduct/${productId}`);
     return response.data;
   } catch (error) {
     throw new Response(
