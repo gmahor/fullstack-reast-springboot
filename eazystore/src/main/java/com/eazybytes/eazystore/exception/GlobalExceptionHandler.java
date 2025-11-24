@@ -1,6 +1,6 @@
 package com.eazybytes.eazystore.exception;
 
-import com.eazybytes.eazystore.dto.ErrorRespDTO;
+import com.eazybytes.eazystore.dto.ErrorRespDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,9 +16,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorRespDTO> handleGlobalException(Exception exception,
+    public ResponseEntity<ErrorRespDto> handleGlobalException(Exception exception,
                                                               WebRequest webRequest) {
-        ErrorRespDTO errorRespDTO = new ErrorRespDTO(
+        ErrorRespDto errorRespDTO = new ErrorRespDto(
                 webRequest.getDescription(false),
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 exception.getMessage(),
@@ -40,6 +40,17 @@ public class GlobalExceptionHandler {
                 );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errors);
+    }
+
+    @ExceptionHandler(JwtTokenException.class)
+    public ResponseEntity<ErrorRespDto> handleValidationException(JwtTokenException exception,
+                                                                         WebRequest webRequest) {
+        ErrorRespDto errorRespDTO = new ErrorRespDto(
+                webRequest.getDescription(false),
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage(),
+                LocalDateTime.now());
+        return new ResponseEntity<>(errorRespDTO, HttpStatus.BAD_REQUEST);
     }
 
 }
