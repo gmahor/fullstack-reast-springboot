@@ -25,9 +25,9 @@ export const Cart = () => {
               <Link to="/home" className="py-2 px-4 bg-primary text-black">
                 Back to Product
               </Link>
-              <button className="py-2 px-4 bg-primary text-black">
+              <Link to="/checkout" className="py-2 px-4 bg-primary text-black">
                 proceed to Checkout
-              </button>
+              </Link>
             </div>
           </>
         ) : (

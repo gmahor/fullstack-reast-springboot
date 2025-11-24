@@ -1,27 +1,29 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { About } from "./components/About.jsx";
-import { Contact, contactAction } from "./components/Contact.jsx";
-import { Login } from "./components/Login..jsx";
-import { Cart } from "./components/Cart.jsx";
-import { Home, productsLoader } from "./components/home/Home.jsx";
-import { ErrorPage } from "./components/ErrorPage.jsx";
-import { Register } from "./components/Register.jsx";
-import "react-toastify/dist/ReactToastify.css";
 import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import App from "./App.jsx";
+import { About } from "./components/About.jsx";
+import { Cart } from "./components/Cart.jsx";
+import { Checkout } from "./components/Checkout.jsx";
+import { Contact, contactAction } from "./components/Contact.jsx";
+import { ErrorPage } from "./components/ErrorPage.jsx";
+import { Home, productsLoader } from "./components/home/Home.jsx";
+import { Login, loginApi } from "./components/Login..jsx";
 import {
   getProductDetails,
   ProductDetail,
 } from "./components/product/ProductDetail.jsx";
-import { CartContext, CartProvider } from "./store/cart-content.jsx";
+import { Register } from "./components/Register.jsx";
+import "./index.css";
+import { AuthProvider } from "./store/auth-context.jsx";
+import { CartProvider } from "./store/cart-content.jsx";
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -29,7 +31,7 @@ const routerDefinitions = createRoutesFromElements(
     <Route path="/home" element={<Home />} loader={productsLoader} />
     <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} action={contactAction} />
-    <Route path="/login" element={<Login />} />
+    <Route path="/login" element={<Login />} action={loginApi} />
     <Route path="/register" element={<Register />} />
     <Route path="/cart" element={<Cart />} />
     <Route
@@ -37,6 +39,7 @@ const routerDefinitions = createRoutesFromElements(
       element={<ProductDetail />}
       loader={getProductDetails}
     />
+    <Route path="/checkout" element={<Checkout />} />
   </Route>
 );
 
@@ -44,9 +47,11 @@ const appRouter = createBrowserRouter(routerDefinitions);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <RouterProvider router={appRouter} />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <RouterProvider router={appRouter} />
+      </CartProvider>
+    </AuthProvider>
     <ToastContainer
       position="top-center"
       autoClose={3000}
