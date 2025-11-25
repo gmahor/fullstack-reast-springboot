@@ -10,25 +10,25 @@ import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
 import { About } from "./components/About.jsx";
+import { AdminOrders } from "./components/admin/AdminOrders.jsx";
+import { Messages } from "./components/admin/Messages.jsx";
 import { Cart } from "./components/Cart.jsx";
 import { Checkout } from "./components/Checkout.jsx";
 import { Contact, contactAction } from "./components/Contact.jsx";
 import { ErrorPage } from "./components/ErrorPage.jsx";
 import { Home, productsLoader } from "./components/home/Home.jsx";
 import { Login, loginApi } from "./components/Login..jsx";
+import { Orders } from "./components/Orders.jsx";
 import {
   getProductDetails,
   ProductDetail,
 } from "./components/product/ProductDetail.jsx";
-import { Register } from "./components/Register.jsx";
+import { Profile } from "./components/Profile.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { Register, registerAction } from "./components/Register.jsx";
 import "./index.css";
 import { AuthProvider } from "./store/auth-context.jsx";
 import { CartProvider } from "./store/cart-content.jsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
-import { Profile } from "./components/Profile.jsx";
-import { Orders } from "./components/Orders.jsx";
-import { AdminOrders } from "./components/admin/AdminOrders.jsx";
-import { Messages } from "./components/admin/Messages.jsx";
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -37,7 +37,7 @@ const routerDefinitions = createRoutesFromElements(
     <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} action={contactAction} />
     <Route path="/login" element={<Login />} action={loginApi} />
-    <Route path="/register" element={<Register />} />
+    <Route path="/register" element={<Register />} action={registerAction}/>
     <Route path="/cart" element={<Cart />} />
     <Route
       path="/products/:productId"
