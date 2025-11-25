@@ -16,7 +16,8 @@ public class PublicPathConfig {
                 "/api/v1/products/getProduct/**",
                 "/api/v1/products/sort/**",
                 "api/v1/contacts/**",
-                "/api/v1/auth/login"
+                "/api/v1/auth/login",
+                "/api/v1/auth/register"
                 );
     }
 
