@@ -24,6 +24,11 @@ import { Register } from "./components/Register.jsx";
 import "./index.css";
 import { AuthProvider } from "./store/auth-context.jsx";
 import { CartProvider } from "./store/cart-content.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { Profile } from "./components/Profile.jsx";
+import { Orders } from "./components/Orders.jsx";
+import { AdminOrders } from "./components/admin/AdminOrders.jsx";
+import { Messages } from "./components/admin/Messages.jsx";
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -39,7 +44,13 @@ const routerDefinitions = createRoutesFromElements(
       element={<ProductDetail />}
       loader={getProductDetails}
     />
-    <Route path="/checkout" element={<Checkout />} />
+    <Route element={<ProtectedRoute />}>
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/orders" element={<Orders />} />
+      <Route path="/admin/orders" element={<AdminOrders />} />
+      <Route path="/admin/messages" element={<Messages />} />
+    </Route>
   </Route>
 );
 

@@ -22,11 +22,11 @@ export const Cart = () => {
           <>
             <CartTable />
             <div className="flex justify-between mt-8 space-x-4">
-              <Link to="/home" className="py-2 px-4 bg-primary text-black">
+              <Link to="/home" className="py-2 px-4 bg-primary text-white">
                 Back to Product
               </Link>
-              <Link to="/checkout" className="py-2 px-4 bg-primary text-black">
-                proceed to Checkout
+              <Link to="/checkout" className="py-2 px-4 bg-primary text-white">
+                Proceed to Checkout
               </Link>
             </div>
           </>

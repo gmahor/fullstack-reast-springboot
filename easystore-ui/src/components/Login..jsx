@@ -18,10 +18,13 @@ export const Login = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const { loginSuccess } = useAuth();
+  const from = sessionStorage.getItem("redirectPath") || "/home";
+
   useEffect(() => {
     if (actionData?.success) {
       loginSuccess(actionData.jwtToken, actionData.user);
-      navigate("/home");
+      sessionStorage.removeItem("redirectPath");
+      navigate(from);
     } else if (actionData?.error) {
       toast.error(actionData?.error?.message || "Login failed.");
     }
