@@ -23,7 +23,7 @@ import {
   getProductDetails,
   ProductDetail,
 } from "./components/product/ProductDetail.jsx";
-import { Profile } from "./components/Profile.jsx";
+import { Profile, profileAction, profileLoader } from "./components/Profile.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { Register, registerAction } from "./components/Register.jsx";
 import "./index.css";
@@ -37,7 +37,7 @@ const routerDefinitions = createRoutesFromElements(
     <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} action={contactAction} />
     <Route path="/login" element={<Login />} action={loginApi} />
-    <Route path="/register" element={<Register />} action={registerAction}/>
+    <Route path="/register" element={<Register />} action={registerAction} />
     <Route path="/cart" element={<Cart />} />
     <Route
       path="/products/:productId"
@@ -46,7 +46,7 @@ const routerDefinitions = createRoutesFromElements(
     />
     <Route element={<ProtectedRoute />}>
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<Profile />} loader={profileLoader} action={profileAction}/>
       <Route path="/orders" element={<Orders />} />
       <Route path="/admin/orders" element={<AdminOrders />} />
       <Route path="/admin/messages" element={<Messages />} />

@@ -105,7 +105,13 @@ export const Header = () => {
                     onClick={toggleUserMenu}
                     className="relative text-primary"
                   >
-                    <span className="{navLinkClass}">{user.name}</span>
+                    <span className="{navLinkClass}">
+                      {`Hello ${
+                        user.name.length > 5
+                          ? `${user.name.slice(0, 5)}...`
+                          : user.name
+                      }`}
+                    </span>
                     <FontAwesomeIcon
                       icon={faAngleDown}
                       className="text-primary w-6 h-6"
