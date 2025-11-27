@@ -54,10 +54,10 @@ export const Profile = () => {
             type="text"
             placeholder="Your Name"
             className={textFieldStyle}
-            // value={profileData.name}
-            // onChange={(e) =>
-            //   setProfileData((prev) => ({ ...prev, name: e.target.value }))
-            // }
+            value={profileData.name}
+            onChange={(e) =>
+              setProfileData((prev) => ({ ...prev, name: e.target.value }))
+            }
             required
             minLength={5}
             maxLength={30}
@@ -79,10 +79,10 @@ export const Profile = () => {
               name="email"
               type="email"
               placeholder="Your Email"
-              // value={profileData.email}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({ ...prev, email: e.target.value }))
-              // }
+              value={profileData.email}
+              onChange={(e) =>
+                setProfileData((prev) => ({ ...prev, email: e.target.value }))
+              }
               className={textFieldStyle}
               required
             />
@@ -104,13 +104,13 @@ export const Profile = () => {
               required
               pattern="^\d{10}$"
               title="Mobile number must be exactly 10 digits"
-              // value={profileData.mobileNumber}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({
-              //     ...prev,
-              //     mobileNumber: e.target.value,
-              //   }))
-              // }
+              value={profileData.mobileNumber}
+              onChange={(e) =>
+                setProfileData((prev) => ({
+                  ...prev,
+                  mobileNumber: e.target.value,
+                }))
+              }
               placeholder="Your Mobile Number"
               className={textFieldStyle}
             />
@@ -132,13 +132,13 @@ export const Profile = () => {
             name="street"
             type="text"
             placeholder="Street details"
-            // value={profileData.street}
-            // onChange={(e) =>
-            //   setProfileData((prev) => ({
-            //     ...prev,
-            //     street: e.target.value,
-            //   }))
-            // }
+            value={profileData.street}
+            onChange={(e) =>
+              setProfileData((prev) => ({
+                ...prev,
+                street: e.target.value,
+              }))
+            }
             className={textFieldStyle}
             required
             minLength={5}
@@ -161,13 +161,13 @@ export const Profile = () => {
               name="city"
               type="text"
               placeholder="Your City"
-              // value={profileData.city}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({
-              //     ...prev,
-              //     city: e.target.value,
-              //   }))
-              // }
+              value={profileData.city}
+              onChange={(e) =>
+                setProfileData((prev) => ({
+                  ...prev,
+                  city: e.target.value,
+                }))
+              }
               className={textFieldStyle}
               required
               minLength={3}
@@ -192,13 +192,13 @@ export const Profile = () => {
               minLength={2}
               maxLength={30}
               placeholder="Your State"
-              // value={profileData.state}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({
-              //     ...prev,
-              //     state: e.target.value,
-              //   }))
-              // }
+              value={profileData.state}
+              onChange={(e) =>
+                setProfileData((prev) => ({
+                  ...prev,
+                  state: e.target.value,
+                }))
+              }
               className={textFieldStyle}
             />
             {actionData?.errors?.state && (
@@ -219,16 +219,16 @@ export const Profile = () => {
               name="postalCode"
               type="text"
               placeholder="Your Postal Code"
-              // value={profileData.postalCode}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({
-              //     ...prev,
-              //     postalCode: e.target.value,
-              //   }))
-              // }
+              value={profileData.postalCode}
+              onChange={(e) =>
+                setProfileData((prev) => ({
+                  ...prev,
+                  postalCode: e.target.value,
+                }))
+              }
               className={textFieldStyle}
               required
-              pattern="^\d{5}$"
+              pattern="^\d{6}$"
               title="Postal code must be exactly 5 digits"
             />
             {actionData?.errors?.postalCode && (
@@ -250,13 +250,13 @@ export const Profile = () => {
               minLength={3}
               maxLength={30}
               placeholder="Your Country"
-              // value={profileData.country}
-              // onChange={(e) =>
-              //   setProfileData((prev) => ({
-              //     ...prev,
-              //     country: e.target.value,
-              //   }))
-              // }
+              value={profileData.country}
+              onChange={(e) =>
+                setProfileData((prev) => ({
+                  ...prev,
+                  country: e.target.value,
+                }))
+              }
               className={textFieldStyle}
             />
             {actionData?.errors?.country && (

@@ -24,7 +24,9 @@ export const Login = () => {
     if (actionData?.success) {
       loginSuccess(actionData.jwtToken, actionData.user);
       sessionStorage.removeItem("redirectPath");
-      navigate(from);
+      setTimeout(() => {
+        navigate(from);
+      }, 100);
     } else if (actionData?.error) {
       toast.error(actionData?.error?.message || "Login failed.");
     }

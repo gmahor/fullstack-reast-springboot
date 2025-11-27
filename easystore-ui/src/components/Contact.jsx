@@ -146,7 +146,7 @@ export const Contact = () => {
                 {actionData?.errors.message}
               </p>
             )}
-        </div>l̥
+        </div>
 
         {/* Submit Button */}
         <div className="text-center">

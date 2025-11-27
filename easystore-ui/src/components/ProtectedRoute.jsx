@@ -7,7 +7,8 @@ export const ProtectedRoute = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!isAuthenticated && location.pathname !== "/login") {
+    const skipRedirect = sessionStorage.getItem("skipRedirectPath");
+    if (!isAuthenticated && location.pathname !== "/login" && !skipRedirect) {
       sessionStorage.setItem("redirectPath", location.pathname);
     }
   }, [isAuthenticated, location.pathname]);

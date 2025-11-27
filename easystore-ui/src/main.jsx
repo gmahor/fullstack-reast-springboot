@@ -23,7 +23,11 @@ import {
   getProductDetails,
   ProductDetail,
 } from "./components/product/ProductDetail.jsx";
-import { Profile, profileAction, profileLoader } from "./components/Profile.jsx";
+import {
+  Profile,
+  profileAction,
+  profileLoader,
+} from "./components/Profile.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { Register, registerAction } from "./components/Register.jsx";
 import "./index.css";
@@ -46,7 +50,15 @@ const routerDefinitions = createRoutesFromElements(
     />
     <Route element={<ProtectedRoute />}>
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/profile" element={<Profile />} loader={profileLoader} action={profileAction}/>
+      <Route
+        path="/profile"
+        element={<Profile />}
+        loader={profileLoader}
+        action={profileAction}
+        shouldRevalidate={({ actionResult }) => {
+          return !actionResult?.success;
+        }}
+      />
       <Route path="/orders" element={<Orders />} />
       <Route path="/admin/orders" element={<AdminOrders />} />
       <Route path="/admin/messages" element={<Messages />} />
