@@ -5,19 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", nullable = false)
-    private Long id;
+    private Long customerId;
 
     @Size(max = 100)
     @NotNull
@@ -39,22 +36,7 @@ public class Customer {
     @Column(name = "password_hash", nullable = false, length = 500)
     private String passwordHash;
 
-    @NotNull
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @NotNull
-    @Column(name = "created_by", nullable = false, length = 20)
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
-    @Size(max = 20)
-    @ColumnDefault("NULL")
-    @Column(name = "updated_by", length = 20)
-    private String updatedBy;
+    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
+    private Address address;
 
 }

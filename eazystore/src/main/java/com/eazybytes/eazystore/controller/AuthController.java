@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -103,8 +102,9 @@ public class AuthController {
         Customer customer = new Customer();
         BeanUtils.copyProperties(registerReqDto, customer);
         customer.setPasswordHash(passwordEncoder.encode(registerReqDto.getPassword()));
-        customer.setCreatedAt(Instant.now());
+//        customer.setCreatedAt(Instant.now());
         customer.setCreatedBy("System");
+        customer.setUpdatedBy("System");
         customerRepository.save(customer);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
