@@ -44,7 +44,6 @@ public class ProfileServiceImpl implements IProfileService {
         address.setState(profileRequestDto.getState());
         address.setPostalCode(profileRequestDto.getPostalCode());
         address.setCountry(profileRequestDto.getCountry());
-        address.setCreatedBy("System");
         customer.setAddress(address);
         customer = customerRepository.save(customer);
         ProfileResponseDto profileResponseDto = mapCustomerToProfileResponseDto(customer);

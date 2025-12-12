@@ -5,6 +5,7 @@ import com.eazybytes.eazystore.dto.LoginRespDto;
 import com.eazybytes.eazystore.dto.RegisterReqDto;
 import com.eazybytes.eazystore.dto.UserDto;
 import com.eazybytes.eazystore.entity.Customer;
+import com.eazybytes.eazystore.entity.Role;
 import com.eazybytes.eazystore.repository.CustomerRepository;
 import com.eazybytes.eazystore.util.JwtUtil;
 import jakarta.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.security.authentication.password.CompromisedPasswordC
 import org.springframework.security.authentication.password.CompromisedPasswordDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -51,6 +55,9 @@ public class AuthController {
             UserDto userDto = new UserDto();
             Customer loggedInUSer = (Customer) authenticate.getPrincipal();
             BeanUtils.copyProperties(loggedInUSer, userDto);
+            userDto.setRoles(authenticate.getAuthorities().stream().map(
+                            GrantedAuthority::getAuthority)
+                    .collect(Collectors.joining(",")));
             String token = jwtUtil.generateJwtToken(authenticate);
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -102,9 +109,9 @@ public class AuthController {
         Customer customer = new Customer();
         BeanUtils.copyProperties(registerReqDto, customer);
         customer.setPasswordHash(passwordEncoder.encode(registerReqDto.getPassword()));
-//        customer.setCreatedAt(Instant.now());
-        customer.setCreatedBy("System");
-        customer.setUpdatedBy("System");
+        Role role = new Role();
+        role.setName("ROLE_USER");
+        customer.setRoles(Set.of(role));
         customerRepository.save(customer);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

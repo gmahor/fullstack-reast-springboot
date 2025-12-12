@@ -44,7 +44,8 @@ public class SecurityConfig {
                 .cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> {
                             publicPaths.forEach(path -> requests.requestMatchers(path).permitAll());
-                            requests.anyRequest().authenticated();
+                            requests.requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN");
+                            requests.anyRequest().hasAnyRole("ADMIN", "USER");
                         }
                 )
                 .addFilterBefore(new JWTTokenValidatorFilter(publicPaths), BasicAuthenticationFilter.class)
@@ -73,7 +74,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManagerBean(AuthenticationProvider authenticationProvider) {
-       return  new ProviderManager(authenticationProvider);
+        return new ProviderManager(authenticationProvider);
     }
 
     @Bean
