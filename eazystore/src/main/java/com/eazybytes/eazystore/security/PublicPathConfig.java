@@ -18,8 +18,8 @@ public class PublicPathConfig {
                 "/api/v1/contacts/**",
                 "/api/v1/auth/login",
                 "/api/v1/auth/register",
-                "/error"
+                "/error",
+                "/api/v1/csrf-token"
                 );
     }
-
 }
