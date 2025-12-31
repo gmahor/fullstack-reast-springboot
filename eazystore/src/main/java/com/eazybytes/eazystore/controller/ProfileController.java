@@ -1,5 +1,6 @@
 package com.eazybytes.eazystore.controller;
 
+import com.eazybytes.eazystore.dto.ProfileRequestDto;
 import com.eazybytes.eazystore.dto.ProfileResponseDto;
 import com.eazybytes.eazystore.service.IProfileService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class ProfileController {
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateProfile(@Validated @RequestBody ProfileResponseDto profileRequestDto){
+    public ResponseEntity<Object> updateProfile(@Validated @RequestBody ProfileRequestDto profileRequestDto){
         ProfileResponseDto profileResponseDto = iProfileService.updateProfile(profileRequestDto);
         return  ResponseEntity.status(HttpStatus.OK).body(profileResponseDto);
     }
