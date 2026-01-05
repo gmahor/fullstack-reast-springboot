@@ -37,7 +37,7 @@ public class JwtUtil {
                                     GrantedAuthority::getAuthority)
                             .collect(Collectors.joining(",")))
                     .issuedAt(new Date())
-                    .expiration(new Date(new Date().getTime() + 60 * 60 * 1000))
+                    .expiration(new Date(new Date().getTime() + 24 * 60 * 60 * 1000))
                     .signWith(secretKey).compact();
         } catch (Exception e) {
             throw new JwtTokenException("Error while generate jwt token!");
