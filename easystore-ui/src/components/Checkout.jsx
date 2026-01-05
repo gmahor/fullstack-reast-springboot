@@ -112,25 +112,24 @@ export const Checkout = () => {
         setErrorMessage(error.message || "Payment failed. Please try again.");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
         toast.success("Payment successful!");
-        navigate("/order-success");
-        // try {
-        //   await apiClient.post("/orders", {
-        //     totalPrice: totalPrice,
-        //     paymentId: paymentIntent.id,
-        //     paymentStatus: paymentIntent.status,
-        //     items: cart.map((item) => ({
-        //       productId: item.productId,
-        //       quantity: item.quantity,
-        //       price: item.price,
-        //     })),
-        //   });
-        //   sessionStorage.setItem("skipRedirectPath", "true");
-        //   navigate("/order-success");
-        //   clearCart();
-        // } catch (orderError) {
-        //   console.error("Failed to create order:", orderError);
-        //   setErrorMessage("Order creation failed. Please contact support.");
-        // }
+        try {
+          await apiClient.post("/orders", {
+            totalPrice: totalPrice,
+            paymentId: paymentIntent.id,
+            paymentStatus: paymentIntent.status,
+            items: cart.map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+          });
+          sessionStorage.setItem("skipRedirectPath", "true");
+          clearCart();
+          navigate("/order-success");
+        } catch (orderError) {
+          console.error("Failed to create order:", orderError);
+          setErrorMessage("Order creation failed. Please contact support.");
+        }
       }
     } catch (error) {
       setErrorMessage("Error processing payment. Please try again later.");
