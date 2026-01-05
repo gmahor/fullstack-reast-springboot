@@ -33,6 +33,14 @@ import { Register, registerAction } from "./components/Register.jsx";
 import "./index.css";
 import { AuthProvider } from "./store/auth-context.jsx";
 import { CartProvider } from "./store/cart-content.jsx";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { OrderSuccess } from "./components/OrderSuccess.jsx";
+
+const stripePromise = loadStripe(
+  "pk_test_51SjfJACeYxgfWgjESL3BnLSo3CUZd4SHJ5blj5uGRfB874569xzdlF3PDiRvLJ0YiD5gZji1dByVJW116k3Ybwgi00UmqJcvVj"
+);
+
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -50,6 +58,7 @@ const routerDefinitions = createRoutesFromElements(
     />
     <Route element={<ProtectedRoute />}>
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/order-success" element={<OrderSuccess />} />
       <Route
         path="/profile"
         element={<Profile />}
@@ -70,19 +79,21 @@ const appRouter = createBrowserRouter(routerDefinitions);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <CartProvider>
-        <RouterProvider router={appRouter} />
-      </CartProvider>
-    </AuthProvider>
-    <ToastContainer
-      position="top-center"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      draggable
-      pauseOnHover
-      transition={Bounce}
-    />
+    <Elements stripe={stripePromise}>
+      <AuthProvider>
+        <CartProvider>
+          <RouterProvider router={appRouter} />
+        </CartProvider>
+      </AuthProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        draggable
+        pauseOnHover
+        transition={Bounce}
+      />
+    </Elements>
   </StrictMode>
 );
