@@ -24,6 +24,9 @@ spring:
       password: gourav
       roles: USER,ADMIN
 
+stripe:
+  apiKey: "sk_test_51SjfJACeYxgfWgjEaLW79diOTrhI59riMndqOGCsnNE02MTNyUXXexNvhKlYVXbrn42K61G4tSeNtoDAFprPMu9r00prEvW38B"
+
 logging:
   pattern:
     console: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n"
