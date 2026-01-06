@@ -18,7 +18,7 @@ import { Contact, contactAction } from "./components/Contact.jsx";
 import { ErrorPage } from "./components/ErrorPage.jsx";
 import { Home, productsLoader } from "./components/home/Home.jsx";
 import { Login, loginApi } from "./components/Login..jsx";
-import { Orders } from "./components/Orders.jsx";
+import { Orders, ordersLoader } from "./components/Orders.jsx";
 import {
   getProductDetails,
   ProductDetail,
@@ -68,7 +68,7 @@ const routerDefinitions = createRoutesFromElements(
           return !actionResult?.success;
         }}
       />
-      <Route path="/orders" element={<Orders />} />
+      <Route path="/orders" element={<Orders />} loader={ordersLoader}/>
       <Route path="/admin/orders" element={<AdminOrders />} />
       <Route path="/admin/messages" element={<Messages />} />
     </Route>
