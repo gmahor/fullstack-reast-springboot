@@ -10,7 +10,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
 import { About } from "./components/About.jsx";
-import { AdminOrders } from "./components/admin/AdminOrders.jsx";
+import { AdminOrders, adminOrdersLoader } from "./components/admin/AdminOrders.jsx";
 import { Messages } from "./components/admin/Messages.jsx";
 import { Cart } from "./components/Cart.jsx";
 import { Checkout } from "./components/Checkout.jsx";
@@ -69,7 +69,7 @@ const routerDefinitions = createRoutesFromElements(
         }}
       />
       <Route path="/orders" element={<Orders />} loader={ordersLoader}/>
-      <Route path="/admin/orders" element={<AdminOrders />} />
+      <Route path="/admin/orders" element={<AdminOrders />} loader={adminOrdersLoader}/>
       <Route path="/admin/messages" element={<Messages />} />
     </Route>
   </Route>

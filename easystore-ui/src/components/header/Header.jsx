@@ -17,7 +17,7 @@ export const Header = () => {
   const useMenuRef = useRef();
   const navigate = useNavigate();
 
-  const isAdmin = true;
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN");;
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const [isAdminMenuOpen, setAdminMenuOpen] = useState(false);
 
