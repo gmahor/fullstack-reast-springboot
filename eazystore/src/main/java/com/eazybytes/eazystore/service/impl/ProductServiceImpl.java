@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,7 @@ public class ProductServiceImpl implements IProductService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Cacheable("products")
     @Override
     public List<ProductDto> getProducts() {
         return productRepository
