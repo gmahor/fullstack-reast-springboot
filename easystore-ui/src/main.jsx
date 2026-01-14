@@ -10,8 +10,11 @@ import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
 import { About } from "./components/About.jsx";
-import { AdminOrders, adminOrdersLoader } from "./components/admin/AdminOrders.jsx";
-import { Messages } from "./components/admin/Messages.jsx";
+import {
+  AdminOrders,
+  adminOrdersLoader,
+} from "./components/admin/AdminOrders.jsx";
+import { Messages, messagesLoader } from "./components/admin/Messages.jsx";
 import { Cart } from "./components/Cart.jsx";
 import { Checkout } from "./components/Checkout.jsx";
 import { Contact, contactAction } from "./components/Contact.jsx";
@@ -41,7 +44,6 @@ const stripePromise = loadStripe(
   "pk_test_51SjfJACeYxgfWgjESL3BnLSo3CUZd4SHJ5blj5uGRfB874569xzdlF3PDiRvLJ0YiD5gZji1dByVJW116k3Ybwgi00UmqJcvVj"
 );
 
-
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
     <Route index element={<Home />} loader={productsLoader} />
@@ -68,9 +70,17 @@ const routerDefinitions = createRoutesFromElements(
           return !actionResult?.success;
         }}
       />
-      <Route path="/orders" element={<Orders />} loader={ordersLoader}/>
-      <Route path="/admin/orders" element={<AdminOrders />} loader={adminOrdersLoader}/>
-      <Route path="/admin/messages" element={<Messages />} />
+      <Route path="/orders" element={<Orders />} loader={ordersLoader} />
+      <Route
+        path="/admin/orders"
+        element={<AdminOrders />}
+        loader={adminOrdersLoader}
+      />
+      <Route
+        path="/admin/messages"
+        element={<Messages />}
+        loader={messagesLoader}
+      />
     </Route>
   </Route>
 );

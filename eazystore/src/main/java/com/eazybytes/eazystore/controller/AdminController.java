@@ -1,6 +1,7 @@
 package com.eazybytes.eazystore.controller;
 
 import com.eazybytes.eazystore.constant.ApplicationConstants;
+import com.eazybytes.eazystore.dto.ContactResponseDto;
 import com.eazybytes.eazystore.dto.ResponseDto;
 import com.eazybytes.eazystore.entity.Order;
 import com.eazybytes.eazystore.service.IContactService;
@@ -8,6 +9,8 @@ import com.eazybytes.eazystore.service.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin")
@@ -18,8 +21,9 @@ public class AdminController {
 
     private final IContactService iContactService;
 
+
     @GetMapping("/orders")
-    public ResponseEntity<Object> getAllPendingOrders(){
+    public ResponseEntity<Object> getAllPendingOrders() {
         return ResponseEntity.ok().body(iOrderService.getAllPendingOrders());
     }
 
@@ -40,8 +44,16 @@ public class AdminController {
         );
     }
 
+    @GetMapping("/messages")
+    public ResponseEntity<List<ContactResponseDto>> getAllOpenMessages() {
+        return ResponseEntity.ok(iContactService.getAllOpenMessages());
+    }
 
-
-
-
+    @PatchMapping("/message/{contactId}/close")
+    public ResponseEntity<ResponseDto> closeMessage(@PathVariable Long contactId) {
+        iContactService.updateMessageStatus(contactId, ApplicationConstants.CLOSED_MESSAGE);
+        return ResponseEntity.ok(
+                new ResponseDto("200", "Contact #" + contactId + " has been closed.")
+        );
+    }
 }
