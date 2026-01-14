@@ -2,8 +2,8 @@ package com.eazybytes.eazystore.controller;
 
 import com.eazybytes.eazystore.dto.*;
 import com.eazybytes.eazystore.entity.Customer;
-import com.eazybytes.eazystore.entity.Role;
 import com.eazybytes.eazystore.repository.CustomerRepository;
+import com.eazybytes.eazystore.repository.RoleRepository;
 import com.eazybytes.eazystore.util.JwtUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +44,8 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     private final CompromisedPasswordChecker compromisedPasswordChecker;
+
+    private final RoleRepository roleRepository;
 
     @PostMapping("/login")
     public ResponseEntity<LoginRespDto> apiLogin(@RequestBody LoginReqDto loginReqDto) {
@@ -111,9 +113,7 @@ public class AuthController {
         Customer customer = new Customer();
         BeanUtils.copyProperties(registerReqDto, customer);
         customer.setPasswordHash(passwordEncoder.encode(registerReqDto.getPassword()));
-        Role role = new Role();
-        role.setName("ROLE_USER");
-        customer.setRoles(Set.of(role));
+        roleRepository.findByName("ROLE_ADMIN").ifPresent(role ->  customer.setRoles(Set.of(role)));
         customerRepository.save(customer);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
