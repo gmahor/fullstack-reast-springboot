@@ -52,7 +52,7 @@ export const Header = () => {
 
   return (
     <header className="border-b border-gray-300 sticky top-0 z-20 bg-gray-100">
-      <div className="flex items-center justify-between mx-auto max-w-[1152px] px-6 py-4">
+      <div className="flex items-center justify-between mx-auto max-w-6xl px-6 py-4">
         <Link to="/" className={`text-primary ${navLinkClass}`}>
           <FontAwesomeIcon icon={faTags} className="h-8 w-8" />
           <span className="font-bold">Eazy Sticker</span>

@@ -64,7 +64,7 @@ export const Cart = () => {
           </>
         ) : (
           <div className="text-center text-gray-600 dark:text-lighter flex flex-col items-center">
-            <p className="max-w-[576px] px-2 mx-auto text-base mb-4">
+            <p className="max-w-xl px-2 mx-auto text-base mb-4">
               Oops... Your cart is empty. Continue shopping
             </p>
             <img

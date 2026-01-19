@@ -52,16 +52,16 @@ export const Messages = () => {
                   key={message.contactId}
                   className=" bg-white dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-lighter"
                 >
-                  <td className="border px-4 py-2 break-words">
+                  <td className="border px-4 py-2 wrap-break-word">
                     {message.name}
                   </td>
-                  <td className="border px-4 py-2 break-words">
+                  <td className="border px-4 py-2 wrap-break-word">
                     {message.email}
                   </td>
-                  <td className="border px-4 py-2 break-words">
+                  <td className="border px-4 py-2 wrap-break-word">
                     {message.mobileNumber}
                   </td>
-                  <td className="border px-4 py-2 break-words max-w-[300px] overflow-auto">
+                  <td className="border px-4 py-2 wrap-break-word max-w-[300px] overflow-auto">
                     {message.message}
                   </td>
                   <td className="border px-4 py-2 text-center">

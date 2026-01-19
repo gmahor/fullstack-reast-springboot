@@ -18,11 +18,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: Asia/Kolkata
-#  security:
-#    user:
-#      name: gourav
-#      password: gourav
-#      roles: USER,ADMIN
+
 
 stripe:
   apiKey: "sk_test_51SjfJACeYxgfWgjEaLW79diOTrhI59riMndqOGCsnNE02MTNyUXXexNvhKlYVXbrn42K61G4tSeNtoDAFprPMu9r00prEvW38B"
