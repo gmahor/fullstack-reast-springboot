@@ -20,7 +20,7 @@ import { Checkout } from "./components/Checkout.jsx";
 import { Contact, contactAction } from "./components/Contact.jsx";
 import { ErrorPage } from "./components/ErrorPage.jsx";
 import { Home, productsLoader } from "./components/home/Home.jsx";
-import { Login, loginApi } from "./components/Login..jsx";
+import { Login, loginApi } from "./components/Login.jsx"; // ✅ fixed typo
 import { Orders, ordersLoader } from "./components/Orders.jsx";
 import {
   getProductDetails,
@@ -40,9 +40,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { OrderSuccess } from "./components/OrderSuccess.jsx";
 
-const stripePromise = loadStripe(
-  "pk_test_51SjfJACeYxgfWgjESL3BnLSo3CUZd4SHJ5blj5uGRfB874569xzdlF3PDiRvLJ0YiD5gZji1dByVJW116k3Ybwgi00UmqJcvVj"
-);
+const stripePromise = loadStripe("pk_test_...");
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -66,9 +64,7 @@ const routerDefinitions = createRoutesFromElements(
         element={<Profile />}
         loader={profileLoader}
         action={profileAction}
-        shouldRevalidate={({ actionResult }) => {
-          return !actionResult?.success;
-        }}
+        shouldRevalidate={({ actionResult }) => !actionResult?.success}
       />
       <Route path="/orders" element={<Orders />} loader={ordersLoader} />
       <Route
@@ -92,7 +88,7 @@ createRoot(document.getElementById("root")).render(
     <Elements stripe={stripePromise}>
       <AuthProvider>
         <CartProvider>
-          <RouterProvider router={appRouter} />
+          <RouterProvider router={appRouter} fallbackElement={<p>Loading...</p>} />
         </CartProvider>
       </AuthProvider>
       <ToastContainer
