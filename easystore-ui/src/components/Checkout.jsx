@@ -1,21 +1,30 @@
 import {
-  CardNumberElement,
-  CardExpiryElement,
   CardCvcElement,
-  useStripe,
+  CardExpiryElement,
+  CardNumberElement,
   useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { useAuth } from "../store/auth-context";
-import { useCart } from "../store/cart-content";
-import { PageTitle } from "./page/PageTitle.jsx";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../api/apiClient.js";
 import { toast } from "react-toastify";
+import apiClient from "../api/apiClient.js";
+import { selectUser } from "../store/auth-slice.js";
+import {
+  clearCart,
+  selectCartItems,
+  selectTotalPrice,
+} from "../store/cart-slice.js";
+import { PageTitle } from "./page/PageTitle.jsx";
 
 export const Checkout = () => {
-  const { user } = useAuth();
-  const { cart, totalPrice, clearCart } = useCart();
+  const user = useSelector(selectUser);
+
+  const dispatch = useDispatch();
+  const cart = useSelector(selectCartItems);
+  const totalPrice = useSelector(selectTotalPrice);
+
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -105,7 +114,7 @@ export const Checkout = () => {
               },
             },
           },
-        }
+        },
       );
 
       if (error) {
@@ -124,7 +133,7 @@ export const Checkout = () => {
             })),
           });
           sessionStorage.setItem("skipRedirectPath", "true");
-          clearCart();
+          dispatch(clearCart());
           navigate("/order-success");
         } catch (orderError) {
           console.error("Failed to create order:", orderError);

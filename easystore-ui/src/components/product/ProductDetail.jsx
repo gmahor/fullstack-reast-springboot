@@ -5,9 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient";
-import { useCart } from "../../store/cart-content";
+import { addToCart } from "../../store/cart-slice";
 
 export const ProductDetail = () => {
   // const params = useParams(); // fetch productId
@@ -18,11 +19,11 @@ export const ProductDetail = () => {
   const zoomRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
   const [backgroundPosition, setBackgroundPosition] = useState("center");
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
 
   const handleAddCart = () => {
     if (quantity < 1) return;
-    addToCart(product, quantity);
+    dispatch(addToCart({product,quantity: quantity}));
   };
 
   const handleMouseMove = (e) => {

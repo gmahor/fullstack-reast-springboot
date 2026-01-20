@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Form,
   useActionData,
@@ -5,10 +7,9 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import apiClient from "../api/apiClient";
-import { useAuth } from "../store/auth-context";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import apiClient from "../api/apiClient";
+import { loginSuccess, logout } from "../store/auth-slice";
 import { PageTitle } from "./page/PageTitle";
 
 export const Profile = () => {
@@ -17,7 +18,7 @@ export const Profile = () => {
   const navigation = useNavigation();
   const navigate = useNavigate();
   const isSubmitting = navigation.state === "submitting";
-  const { loginSuccess, logout } = useAuth();
+  const dispatch = useDispatch();
 
   const [profileData, setProfileData] = useState(initialProfileData);
 
@@ -25,9 +26,9 @@ export const Profile = () => {
     if (actionData?.success) {
       if (actionData.profileData.emailUpdated) {
         sessionStorage.setItem("skipRedirectPath", "true");
-        logout();
+        dispatch(logout());
         toast.success(
-          "Logged out successfully! Login again with updated email"
+          "Logged out successfully! Login again with updated email",
         );
         navigate("/login");
       } else {
@@ -40,7 +41,12 @@ export const Profile = () => {
             ...actionData.profileData, // updated fields
           };
           // Update in context
-          loginSuccess(localStorage.getItem("jwtToken"), updatedUser);
+          dispatch(
+            loginSuccess({
+              jwtToken: localStorage.getItem("jwtToken"),
+              user: updatedUser,
+            }),
+          );
         }
       }
     }
@@ -316,12 +322,12 @@ export const profileLoader = async () => {
     const response = await apiClient.get("/profile");
     return response.data;
   } catch (error) {
-    error.response?.data?.errorMessage ||
+    (error.response?.data?.errorMessage ||
       error.message ||
       "Failed to fetch product",
       {
         status: error.response?.status || 500,
-      };
+      });
   }
 };
 
@@ -349,7 +355,7 @@ export async function profileAction({ request }) {
       error.response?.data?.errorMessage ||
         error.message ||
         "Failed to save profile details. Please try again.",
-      { status: error.status || 500 }
+      { status: error.status || 500 },
     );
   }
 }

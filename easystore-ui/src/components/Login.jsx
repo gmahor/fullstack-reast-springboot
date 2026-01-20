@@ -1,28 +1,30 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Form,
   Link,
-  redirect,
   useActionData,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import { PageTitle } from "./page/PageTitle.jsx";
-import apiClient from "../api/apiClient.js";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useAuth } from "../store/auth-context.jsx";
+import apiClient from "../api/apiClient.js";
+import { loginSuccess } from "../store/auth-slice.js";
+import { PageTitle } from "./page/PageTitle.jsx";
 
 export const Login = () => {
   const actionData = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const { loginSuccess } = useAuth();
+  const dispatch = useDispatch();
   const from = sessionStorage.getItem("redirectPath") || "/home";
 
   useEffect(() => {
     if (actionData?.success) {
-      loginSuccess(actionData.jwtToken, actionData.user);
+      dispatch(
+        loginSuccess({ jwtToken: actionData.jwtToken, user: actionData.user }),
+      );
       sessionStorage.removeItem("redirectPath");
       setTimeout(() => {
         navigate(from);
@@ -125,7 +127,7 @@ export const loginApi = async ({ request }) => {
       error.response?.data?.errorMessage ||
         error.message ||
         "Failed to submit your message. Please try again.",
-      { status: error.status || 500 }
+      { status: error.status || 500 },
     );
   }
 };

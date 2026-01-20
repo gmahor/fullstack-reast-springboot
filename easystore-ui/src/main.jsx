@@ -1,5 +1,8 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -22,6 +25,7 @@ import { ErrorPage } from "./components/ErrorPage.jsx";
 import { Home, productsLoader } from "./components/home/Home.jsx";
 import { Login, loginApi } from "./components/Login.jsx"; // ✅ fixed typo
 import { Orders, ordersLoader } from "./components/Orders.jsx";
+import { OrderSuccess } from "./components/OrderSuccess.jsx";
 import {
   getProductDetails,
   ProductDetail,
@@ -34,13 +38,11 @@ import {
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { Register, registerAction } from "./components/Register.jsx";
 import "./index.css";
-import { AuthProvider } from "./store/auth-context.jsx";
-import { CartProvider } from "./store/cart-content.jsx";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { OrderSuccess } from "./components/OrderSuccess.jsx";
+import store from "./store/store.js";
 
-const stripePromise = loadStripe("pk_test_...");
+const stripePromise = loadStripe(
+  "pk_test_51SjfJACeYxgfWgjESL3BnLSo3CUZd4SHJ5blj5uGRfB874569xzdlF3PDiRvLJ0YiD5gZji1dByVJW116k3Ybwgi00UmqJcvVj",
+);
 
 const routerDefinitions = createRoutesFromElements(
   <Route path="/" element={<App />} errorElement={<ErrorPage />}>
@@ -78,7 +80,7 @@ const routerDefinitions = createRoutesFromElements(
         loader={messagesLoader}
       />
     </Route>
-  </Route>
+  </Route>,
 );
 
 const appRouter = createBrowserRouter(routerDefinitions);
@@ -86,11 +88,9 @@ const appRouter = createBrowserRouter(routerDefinitions);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Elements stripe={stripePromise}>
-      <AuthProvider>
-        <CartProvider>
-          <RouterProvider router={appRouter} fallbackElement={<p>Loading...</p>} />
-        </CartProvider>
-      </AuthProvider>
+      <Provider store={store}>
+        <RouterProvider router={appRouter} />
+      </Provider>
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -101,5 +101,5 @@ createRoot(document.getElementById("root")).render(
         transition={Bounce}
       />
     </Elements>
-  </StrictMode>
+  </StrictMode>,
 );

@@ -5,19 +5,27 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/auth-context";
-import { useCart } from "../../store/cart-content";
 import { toast } from "react-toastify";
+import {
+  logout,
+  selectIsAuthenticated,
+  selectUser,
+} from "../../store/auth-slice";
+import { selectTotalQuantity } from "../../store/cart-slice";
 
 export const Header = () => {
-  const { totalQuantity } = useCart();
-  const { isAuthenticated, user, logout } = useAuth();
+  const totalQuantity = useSelector(selectTotalQuantity);
   const location = useLocation();
   const useMenuRef = useRef();
   const navigate = useNavigate();
 
-  const isAdmin = user?.roles?.includes("ROLE_ADMIN");;
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
+
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN");
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const [isAdminMenuOpen, setAdminMenuOpen] = useState(false);
 
@@ -38,7 +46,7 @@ export const Header = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    logout();
+    dispatch(logout());
     toast.success("Logged out successfully!");
     navigate("/home");
   };
@@ -208,7 +216,7 @@ export const Header = () => {
                   icon={faShoppingBasket}
                 />
                 <div className="absolute -top-2 -right-6 text-xs bg-yellow-400 text-black font-semibold rounded-full px-2 py-1 leading-none">
-                  {totalQuantity}
+                  {totalQuantity || 0}
                 </div>
               </NavLink>
             </li>
